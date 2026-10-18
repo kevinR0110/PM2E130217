@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM2E130217.MainPage"
+             Title="Calculadora de envíos"
+             BackgroundColor="#FFF7ED">
+    <!-- Estilo reutilizable para las etiquetas de cada campo -->
+    <ContentPage.Resources>
+        <Style x:Key="EtiquetaCampo" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="#9A3412" />
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+            <!-- Encabezado -->
+            <Label Text="Envíos Rápidos"
+                   FontSize="30" FontAttributes="Bold"
+                   TextColor="#9A3412" HorizontalOptions="Center" />
+            <Label Text="Calcula el costo total de envío de un paquete"
+                   FontSize="14" TextColor="#C2410C"
+                   HorizontalOptions="Center" Margin="0,0,0,8" />
+            <!-- 1. Descripción del paquete (texto) -->
+            <Label Text="Descripción del paquete" Style="{StaticResource EtiquetaCampo}" />
+            <Entry x:Name="entDescripcion"
+                   Placeholder="Ej. Caja con repuestos"
+                   TextColor="#431407" PlaceholderColor="#9CA3AF" />
+            <!-- 2. Peso en kilogramos (solo números) -->
+            <Label Text="Peso en kilogramos (kg)" Style="{StaticResource EtiquetaCampo}" />
+            <Entry x:Name="entPeso"
+                   Placeholder="Ej. 2.5"
+                   Keyboard="Numeric"
+                   TextColor="#431407" PlaceholderColor="#9CA3AF" />
+            <!-- 3. Zona de destino -->
+            <Label Text="Zona de destino" Style="{StaticResource EtiquetaCampo}" />
+            <Picker x:Name="pickZona"
+                    Title="Selecciona una zona"
+                    TextColor="#431407" TitleColor="#9CA3AF">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Zona local (L50.00 por kg)</x:String>
+                        <x:String>Zona nacional (L85.00 por kg)</x:String>
+                        <x:String>Zona internacional (L150.00 por kg)</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <!-- 4. Servicio exprés / prioritario -->
+            <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,4">
+                <Label Text="Servicio exprés / prioritario (+L100.00)"
+                       FontSize="15" TextColor="#431407" VerticalOptions="Center" />
+                <Switch x:Name="swExpress" Grid.Column="1"
+                        OnColor="#FDBA74" ThumbColor="#EA580C" />
+            </Grid>
+            <!-- Botón principal -->
+            <Button x:Name="btnCalcular"
+                    Text="Calcular envío"
+                    FontAttributes="Bold" FontSize="16"
+                    BackgroundColor="#EA580C" TextColor="White"
+                    CornerRadius="10"
+                    Clicked="OnCalcularClicked" />
+            <!-- Tarjeta de resultados: oculta al iniciar -->
+            <Border x:Name="brdResultado"
+                    IsVisible="False"
+                    Padding="20" StrokeThickness="0"
+                    BackgroundColor="#DCFCE7">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Total a pagar" FontSize="14"
+                           TextColor="#334155" HorizontalOptions="Center" />
+                    <Label x:Name="lblTotal"
+                           FontSize="44" FontAttributes="Bold"
+                           TextColor="#0F172A" HorizontalOptions="Center" />
+                    <Label x:Name="lblPaquete" FontSize="14"
+                           TextColor="#334155" HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                    <Label x:Name="lblDetalle" FontSize="13"
+                           TextColor="#334155" HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
